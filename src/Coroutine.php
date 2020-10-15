@@ -69,10 +69,8 @@ final class Coroutine implements PromiseInterface
         });
         try {
             $this->nextCoroutine($this->generator->current());
-        } catch (\Exception $exception) {
+        } catch (Throwable|Exception $exception) {
             $this->result->reject($exception);
-        } catch (Throwable $throwable) {
-            $this->result->reject($throwable);
         }
     }
 
@@ -81,7 +79,7 @@ final class Coroutine implements PromiseInterface
      *
      * @return self
      */
-    public static function of(callable $generatorFn)
+    public static function of(callable $generatorFn): self
     {
         return new self($generatorFn);
     }
@@ -89,51 +87,99 @@ final class Coroutine implements PromiseInterface
     public function then(
         callable $onFulfilled = null,
         callable $onRejected = null
-    ) {
+    ): PromiseInterface
+    {
         return $this->result->then($onFulfilled, $onRejected);
     }
 
-    public function otherwise(callable $onRejected)
+    public function otherwise(callable $onRejected): PromiseInterface
     {
         return $this->result->otherwise($onRejected);
     }
 
-    public function wait($unwrap = true)
+    /**
+     * Waits until the promise completes if possible.
+     *
+     * Pass $unwrap as true to unwrap the result of the promise, either
+     * returning the resolved value or throwing the rejected exception.
+     *
+     * If the promise cannot be waited on, then the promise will be rejected.
+     *
+     * @param bool $unwrap
+     *
+     * @return PromiseInterface|mixed
+     *
+     * @throws \LogicException|\Throwable if the promise has no wait function or if the
+     *                         promise does not settle after waiting.
+     */
+    public function wait($unwrap = true): PromiseInterface
     {
         return $this->result->wait($unwrap);
     }
 
-    public function getState()
+    /**
+     * Get the state of the promise ("pending", "rejected", or "fulfilled").
+     *
+     * The three states can be checked against the constants defined on
+     * PromiseInterface: PENDING, FULFILLED, and REJECTED.
+     *
+     * @return string
+     */
+    public function getState(): string
     {
         return $this->result->getState();
     }
 
-    public function resolve($value)
+    /**
+     * Resolve the promise with the given value.
+     *
+     * @param mixed $value
+     *
+     * @return PromiseInterface
+     * @throws \RuntimeException if the promise is already resolved.
+     */
+    public function resolve($value): PromiseInterface
     {
         $this->result->resolve($value);
+        return $this;
     }
 
-    public function reject($reason)
+    /**
+     * Reject the promise with the given reason.
+     *
+     * @param mixed $reason
+     *
+     * @return PromiseInterface
+     * @throws \RuntimeException if the promise is already resolved.
+     */
+    public function reject($reason): PromiseInterface
     {
         $this->result->reject($reason);
+        return $this;
     }
 
-    public function cancel()
+    public function cancel(): PromiseInterface
     {
         $this->currentPromise->cancel();
         $this->result->cancel();
+        return $this;
     }
 
-    private function nextCoroutine($yielded)
+    /**
+     * @param $yielded
+     */
+    private function nextCoroutine($yielded): void
     {
         $this->currentPromise = Create::promiseFor($yielded)
             ->then([$this, '_handleSuccess'], [$this, '_handleFailure']);
     }
 
     /**
+     * @param $value
+     *
      * @internal
      */
-    public function _handleSuccess($value)
+    public function _handleSuccess($value): void
     {
         unset($this->currentPromise);
         try {
@@ -152,8 +198,9 @@ final class Coroutine implements PromiseInterface
 
     /**
      * @internal
+     * @param $reason
      */
-    public function _handleFailure($reason)
+    public function _handleFailure($reason): void
     {
         unset($this->currentPromise);
         try {
@@ -165,5 +212,16 @@ final class Coroutine implements PromiseInterface
         } catch (Throwable $throwable) {
             $this->result->reject($throwable);
         }
+    }
+
+    /**
+     * @param callable $wfn
+     * @param null     $newThis
+     *
+     * @return \Closure
+     */
+    public function parseClosure(callable $wfn, $newThis = null): \Closure
+    {
+        return Utils::parseClosure($wfn, $newThis = $newThis ?? $this);
     }
 }

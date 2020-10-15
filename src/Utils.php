@@ -271,4 +271,20 @@ final class Utils
             return $results;
         });
     }
+
+    /**
+     * @param callable $wfn
+     * @param object   $newThis
+     *
+     * @param null     $apply
+     *
+     * @return \Closure
+     */
+    public static function parseClosure(callable $wfn, $newThis, array $apply = null): \Closure
+    {
+        $wfn = isCallable($wfn) ? \Closure::fromCallable($wfn) : $wfn;
+        return $wfn = \Closure::bind($wfn, $newThis);
+
+//        return is_null($apply) ? $wfn : $wfn(...$apply);
+    }
 }

@@ -42,6 +42,23 @@ function task(callable $task)
 }
 
 /**
+ * return bool
+ */
+if ( !function_exists('isCallable') ) {
+    /**
+     * Check if the given var is callable && not string.
+     *
+     * @param mixed|null $callable
+     *
+     * @return bool
+     */
+    function isCallable($callable): bool
+    {
+        return is_callable($callable) && !($callable instanceof \Closure);
+    }
+}
+
+/**
  * Creates a promise for a value if the value is not a promise.
  *
  * @param mixed $value Promise or value.
