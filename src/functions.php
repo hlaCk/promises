@@ -1,6 +1,6 @@
 <?php
 
-namespace GuzzleHttp\Promise;
+namespace hlaCk\Promise;
 
 /**
  * Get the global task queue used for promise resolution.
@@ -11,7 +11,7 @@ namespace GuzzleHttp\Promise;
  *
  * <code>
  * while ($eventLoop->isRunning()) {
- *     GuzzleHttp\Promise\queue()->run();
+ *     hlaCk\Promise\queue()->run();
  * }
  * </code>
  *
@@ -19,7 +19,7 @@ namespace GuzzleHttp\Promise;
  *
  * @return TaskQueueInterface
  *
- * @deprecated queue will be removed in guzzlehttp/promises:2.0. Use Utils::queue instead.
+ * @deprecated queue will be removed in hlaCk/promises:2.0. Use Utils::queue instead.
  */
 function queue(TaskQueueInterface $assign = null)
 {
@@ -34,7 +34,7 @@ function queue(TaskQueueInterface $assign = null)
  *
  * @return PromiseInterface
  *
- * @deprecated task will be removed in guzzlehttp/promises:2.0. Use Utils::task instead.
+ * @deprecated task will be removed in hlaCk/promises:2.0. Use Utils::task instead.
  */
 function task(callable $task)
 {
@@ -48,7 +48,7 @@ function task(callable $task)
  *
  * @return PromiseInterface
  *
- * @deprecated promise_for will be removed in guzzlehttp/promises:2.0. Use Create::promiseFor instead.
+ * @deprecated promise_for will be removed in hlaCk/promises:2.0. Use Create::promiseFor instead.
  */
 function promise_for($value)
 {
@@ -63,7 +63,7 @@ function promise_for($value)
  *
  * @return PromiseInterface
  *
- * @deprecated rejection_for will be removed in guzzlehttp/promises:2.0. Use Create::rejectionFor instead.
+ * @deprecated rejection_for will be removed in hlaCk/promises:2.0. Use Create::rejectionFor instead.
  */
 function rejection_for($reason)
 {
@@ -77,7 +77,7 @@ function rejection_for($reason)
  *
  * @return \Exception|\Throwable
  *
- * @deprecated exception_for will be removed in guzzlehttp/promises:2.0. Use Create::exceptionFor instead.
+ * @deprecated exception_for will be removed in hlaCk/promises:2.0. Use Create::exceptionFor instead.
  */
 function exception_for($reason)
 {
@@ -91,7 +91,7 @@ function exception_for($reason)
  *
  * @return \Iterator
  *
- * @deprecated iter_for will be removed in guzzlehttp/promises:2.0. Use Create::iterFor instead.
+ * @deprecated iter_for will be removed in hlaCk/promises:2.0. Use Create::iterFor instead.
  */
 function iter_for($value)
 {
@@ -112,7 +112,7 @@ function iter_for($value)
  *
  * @return array
  *
- * @deprecated inspect will be removed in guzzlehttp/promises:2.0. Use Utils::inspect instead.
+ * @deprecated inspect will be removed in hlaCk/promises:2.0. Use Utils::inspect instead.
  */
 function inspect(PromiseInterface $promise)
 {
@@ -131,7 +131,7 @@ function inspect(PromiseInterface $promise)
  *
  * @return array
  *
- * @deprecated inspect will be removed in guzzlehttp/promises:2.0. Use Utils::inspectAll instead.
+ * @deprecated inspect will be removed in hlaCk/promises:2.0. Use Utils::inspectAll instead.
  */
 function inspect_all($promises)
 {
@@ -152,7 +152,7 @@ function inspect_all($promises)
  * @throws \Exception on error
  * @throws \Throwable on error in PHP >=7
  *
- * @deprecated unwrap will be removed in guzzlehttp/promises:2.0. Use Utils::unwrap instead.
+ * @deprecated unwrap will be removed in hlaCk/promises:2.0. Use Utils::unwrap instead.
  */
 function unwrap($promises)
 {
@@ -172,7 +172,7 @@ function unwrap($promises)
  *
  * @return PromiseInterface
  *
- * @deprecated all will be removed in guzzlehttp/promises:2.0. Use Utils::all instead.
+ * @deprecated all will be removed in hlaCk/promises:2.0. Use Utils::all instead.
  */
 function all($promises, $recursive = false)
 {
@@ -195,7 +195,7 @@ function all($promises, $recursive = false)
  *
  * @return PromiseInterface
  *
- * @deprecated some will be removed in guzzlehttp/promises:2.0. Use Utils::some instead.
+ * @deprecated some will be removed in hlaCk/promises:2.0. Use Utils::some instead.
  */
 function some($count, $promises)
 {
@@ -210,7 +210,7 @@ function some($count, $promises)
  *
  * @return PromiseInterface
  *
- * @deprecated any will be removed in guzzlehttp/promises:2.0. Use Utils::any instead.
+ * @deprecated any will be removed in hlaCk/promises:2.0. Use Utils::any instead.
  */
 function any($promises)
 {
@@ -229,7 +229,7 @@ function any($promises)
  *
  * @return PromiseInterface
  *
- * @deprecated settle will be removed in guzzlehttp/promises:2.0. Use Utils::settle instead.
+ * @deprecated settle will be removed in hlaCk/promises:2.0. Use Utils::settle instead.
  */
 function settle($promises)
 {
@@ -255,7 +255,7 @@ function settle($promises)
  *
  * @return PromiseInterface
  *
- * @deprecated each will be removed in guzzlehttp/promises:2.0. Use Each::of instead.
+ * @deprecated each will be removed in hlaCk/promises:2.0. Use Each::of instead.
  */
 function each(
     $iterable,
@@ -280,7 +280,7 @@ function each(
  *
  * @return PromiseInterface
  *
- * @deprecated each_limit will be removed in guzzlehttp/promises:2.0. Use Each::ofLimit instead.
+ * @deprecated each_limit will be removed in hlaCk/promises:2.0. Use Each::ofLimit instead.
  */
 function each_limit(
     $iterable,
@@ -302,7 +302,7 @@ function each_limit(
  *
  * @return PromiseInterface
  *
- * @deprecated each_limit_all will be removed in guzzlehttp/promises:2.0. Use Each::ofLimitAll instead.
+ * @deprecated each_limit_all will be removed in hlaCk/promises:2.0. Use Each::ofLimitAll instead.
  */
 function each_limit_all(
     $iterable,
@@ -317,7 +317,7 @@ function each_limit_all(
  *
  * @return bool
  *
- * @deprecated is_fulfilled will be removed in guzzlehttp/promises:2.0. Use Is::fulfilled instead.
+ * @deprecated is_fulfilled will be removed in hlaCk/promises:2.0. Use Is::fulfilled instead.
  */
 function is_fulfilled(PromiseInterface $promise)
 {
@@ -329,7 +329,7 @@ function is_fulfilled(PromiseInterface $promise)
  *
  * @return bool
  *
- * @deprecated is_rejected will be removed in guzzlehttp/promises:2.0. Use Is::rejected instead.
+ * @deprecated is_rejected will be removed in hlaCk/promises:2.0. Use Is::rejected instead.
  */
 function is_rejected(PromiseInterface $promise)
 {
@@ -341,7 +341,7 @@ function is_rejected(PromiseInterface $promise)
  *
  * @return bool
  *
- * @deprecated is_settled will be removed in guzzlehttp/promises:2.0. Use Is::settled instead.
+ * @deprecated is_settled will be removed in hlaCk/promises:2.0. Use Is::settled instead.
  */
 function is_settled(PromiseInterface $promise)
 {
@@ -355,7 +355,7 @@ function is_settled(PromiseInterface $promise)
  *
  * @return PromiseInterface
  *
- * @deprecated coroutine will be removed in guzzlehttp/promises:2.0. Use Coroutine::of instead.
+ * @deprecated coroutine will be removed in hlaCk/promises:2.0. Use Coroutine::of instead.
  */
 function coroutine(callable $generatorFn)
 {

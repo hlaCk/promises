@@ -1,6 +1,6 @@
 <?php
 
-namespace GuzzleHttp\Promise;
+namespace hlaCk\Promise;
 
 /**
  * Promises/A+ implementation that avoids recursion when possible.

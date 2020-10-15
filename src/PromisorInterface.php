@@ -1,6 +1,6 @@
 <?php
 
-namespace GuzzleHttp\Promise;
+namespace hlaCk\Promise;
 
 /**
  * Interface used with classes that return a promise.

@@ -1,6 +1,6 @@
 <?php
 
-namespace GuzzleHttp\Promise;
+namespace hlaCk\Promise;
 
 /**
  * A special exception that is thrown when waiting on a rejected promise.
