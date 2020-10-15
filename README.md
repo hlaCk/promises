@@ -1,4 +1,4 @@
-# Guzzle Promises
+# Guzzle Promises By hlaCk
 
 [Promises/A+](https://promisesaplus.com/) implementation that handles promise
 chaining and resolution iteratively, allowing for "infinite" promise chaining
