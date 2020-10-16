@@ -10,8 +10,10 @@ namespace hlaCk\Promise;
  */
 class RejectedPromise implements PromiseInterface
 {
+    use \mPhpMaster\Support\Traits\TMacroable;
+
     /**
-     * @var
+     * @var mixed
      */
     private $reason;
 

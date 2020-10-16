@@ -44,6 +44,8 @@ use Throwable;
  */
 final class Coroutine implements PromiseInterface
 {
+    use \mPhpMaster\Support\Traits\TMacroable;
+
     /**
      * @var PromiseInterface|null
      */

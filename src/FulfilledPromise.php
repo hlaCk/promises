@@ -10,6 +10,8 @@ namespace hlaCk\Promise;
  */
 class FulfilledPromise implements PromiseInterface
 {
+    use \mPhpMaster\Support\Traits\TMacroable;
+
     /**
      * @var
      */

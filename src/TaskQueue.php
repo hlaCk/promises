@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpPrivateFieldCanBeLocalVariableInspection */
 
 namespace hlaCk\Promise;
 
@@ -13,9 +13,22 @@ namespace hlaCk\Promise;
  */
 class TaskQueue implements TaskQueueInterface
 {
-    private $enableShutdown = true;
-    private $queue = [];
+    use \mPhpMaster\Support\Traits\TMacroable;
 
+    /**
+     * @var bool
+     */
+    private bool $enableShutdown = true;
+    /**
+     * @var array
+     */
+    private array $queue = [];
+
+    /**
+     * TaskQueue constructor.
+     *
+     * @param bool $withShutdown
+     */
     public function __construct($withShutdown = true)
     {
         if ($withShutdown) {
@@ -31,17 +44,29 @@ class TaskQueue implements TaskQueueInterface
         }
     }
 
-    public function isEmpty()
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool
     {
         return !$this->queue;
     }
 
-    public function add(callable $task)
+    /**
+     * Adds a task to the queue that will be executed the next time run is
+     * called.
+     * @return void
+     */
+    public function add(callable $task): void
     {
         $this->queue[] = $task;
     }
 
-    public function run()
+    /**
+     * Execute all of the pending task in the queue.
+     * @return void
+     */
+    public function run(): void
     {
         while ($task = array_shift($this->queue)) {
             /** @var callable $task */
@@ -60,7 +85,7 @@ class TaskQueue implements TaskQueueInterface
      *
      * Note: This shutdown will occur before any destructors are triggered.
      */
-    public function disableShutdown()
+    public function disableShutdown(): void
     {
         $this->enableShutdown = false;
     }

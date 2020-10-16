@@ -4,6 +4,8 @@ namespace hlaCk\Promise;
 
 final class Create
 {
+    use \mPhpMaster\Support\Traits\TMacroable;
+
     /**
      * Creates a promise for a value if the value is not a promise.
      *

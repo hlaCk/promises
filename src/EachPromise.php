@@ -8,7 +8,12 @@ namespace hlaCk\Promise;
  */
 class EachPromise implements PromisorInterface
 {
-    private $pending = [];
+    use \mPhpMaster\Support\Traits\TMacroable;
+
+    /**
+     * @var array|null
+     */
+    private ?array $pending = [];
 
     /** @var \Iterator|null */
     private $iterable;
@@ -23,10 +28,10 @@ class EachPromise implements PromisorInterface
     private $onRejected;
 
     /** @var Promise|null */
-    private $aggregate;
+    private ?Promise $aggregate;
 
     /** @var bool|null */
-    private $mutex;
+    private ?bool $mutex;
 
     /**
      * Configuration hash can include the following key value pairs:
@@ -80,13 +85,7 @@ class EachPromise implements PromisorInterface
             if (!$this->checkIfFinished()) {
                 $this->refillPending();
             }
-        } catch (\Throwable $e) {
-            /**
-             * @psalm-suppress NullReference
-             * @phpstan-ignore-next-line
-             */
-            $this->aggregate->reject($e);
-        } catch (\Exception $e) {
+        } catch (\Throwable|\Exception $e) {
             /**
              * @psalm-suppress NullReference
              * @phpstan-ignore-next-line
@@ -101,7 +100,10 @@ class EachPromise implements PromisorInterface
         return $this->aggregate;
     }
 
-    private function createPromise()
+    /**
+     *
+     */
+    private function createPromise(): void
     {
         $this->mutex = false;
         $this->aggregate = new Promise(function () {
@@ -126,12 +128,18 @@ class EachPromise implements PromisorInterface
         $this->aggregate->then($clearFn, $clearFn);
     }
 
-    private function refillPending()
+    /**
+     *
+     */
+    private function refillPending(): void
     {
         if (!$this->concurrency) {
             // Add all pending promises.
-            while ($this->addPending() && $this->advanceIterator());
-            return;
+            while ($this->addPending() && $this->advanceIterator()) {
+                null;
+            }
+
+            return ;
         }
 
         // Add only up to N pending promises.
@@ -151,10 +159,15 @@ class EachPromise implements PromisorInterface
         // next value to yield until promise callbacks are called.
         while (--$concurrency
             && $this->advanceIterator()
-            && $this->addPending());
+            && $this->addPending()) {
+            null;
+        }
     }
 
-    private function addPending()
+    /**
+     * @return bool
+     */
+    private function addPending(): bool
     {
         if (!$this->iterable || !$this->iterable->valid()) {
             return false;
@@ -197,7 +210,10 @@ class EachPromise implements PromisorInterface
         return true;
     }
 
-    private function advanceIterator()
+    /**
+     * @return bool
+     */
+    private function advanceIterator(): ?bool
     {
         // Place a lock on the iterator so that we ensure to not recurse,
         // preventing fatal generator errors.
@@ -211,18 +227,17 @@ class EachPromise implements PromisorInterface
             $this->iterable->next();
             $this->mutex = false;
             return true;
-        } catch (\Throwable $e) {
-            $this->aggregate->reject($e);
-            $this->mutex = false;
-            return false;
-        } catch (\Exception $e) {
+        } catch (\Throwable|\Exception $e) {
             $this->aggregate->reject($e);
             $this->mutex = false;
             return false;
         }
     }
 
-    private function step($idx)
+    /**
+     * @param $idx
+     */
+    private function step($idx): void
     {
         // If the promise was already resolved, then ignore this step.
         if (Is::settled($this->aggregate)) {
@@ -240,7 +255,10 @@ class EachPromise implements PromisorInterface
         }
     }
 
-    private function checkIfFinished()
+    /**
+     * @return bool
+     */
+    private function checkIfFinished(): bool
     {
         if (!$this->pending && !$this->iterable->valid()) {
             // Resolve the promise if there's nothing left to do.

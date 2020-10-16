@@ -9,12 +9,14 @@ namespace hlaCk\Promise;
  */
 class Promise implements PromiseInterface
 {
+    use \mPhpMaster\Support\Traits\TMacroable;
+
     /**
      * @var string
      */
-    private $state = self::PENDING;
+    private string $state = self::PENDING;
     /**
-     * @var
+     * @var mixed
      */
     private $result;
     /**
@@ -26,13 +28,13 @@ class Promise implements PromiseInterface
      */
     private $waitFn;
     /**
-     * @var
+     * @var ?array
      */
-    private $waitList;
+    private ?array $waitList;
     /**
-     * @var array
+     * @var array|null
      */
-    private $handlers = [];
+    private ?array $handlers = [];
 
     /**
      * @param callable|null $waitFn Fn that when invoked resolves the promise.

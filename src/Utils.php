@@ -2,8 +2,15 @@
 
 namespace hlaCk\Promise;
 
+/**
+ * Class Utils
+ *
+ * @package hlaCk\Promise
+ */
 final class Utils
 {
+    use \mPhpMaster\Support\Traits\TMacroable;
+
     /**
      * Get the global task queue used for promise resolution.
      *
@@ -49,9 +56,7 @@ final class Utils
         $queue->add(function () use ($task, $promise) {
             try {
                 $promise->resolve($task());
-            } catch (\Throwable $e) {
-                $promise->reject($e);
-            } catch (\Exception $e) {
+            } catch (\Throwable|\Exception $e) {
                 $promise->reject($e);
             }
         });
@@ -82,9 +87,7 @@ final class Utils
             ];
         } catch (RejectionException $e) {
             return ['state' => PromiseInterface::REJECTED, 'reason' => $e->getReason()];
-        } catch (\Throwable $e) {
-            return ['state' => PromiseInterface::REJECTED, 'reason' => $e];
-        } catch (\Exception $e) {
+        } catch (\Throwable|\Exception $e) {
             return ['state' => PromiseInterface::REJECTED, 'reason' => $e];
         }
     }
@@ -276,15 +279,11 @@ final class Utils
      * @param callable $wfn
      * @param object   $newThis
      *
-     * @param null     $apply
-     *
      * @return \Closure
      */
-    public static function parseClosure(callable $wfn, $newThis, array $apply = null): \Closure
+    public static function parseClosure(callable $wfn, $newThis): \Closure
     {
         $wfn = isCallable($wfn) ? \Closure::fromCallable($wfn) : $wfn;
         return $wfn = \Closure::bind($wfn, $newThis);
-
-//        return is_null($apply) ? $wfn : $wfn(...$apply);
     }
 }

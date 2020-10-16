@@ -4,6 +4,8 @@ namespace hlaCk\Promise;
 
 final class Is
 {
+    use \mPhpMaster\Support\Traits\TMacroable;
+
     /**
      * Returns true if a promise is pending.
      *

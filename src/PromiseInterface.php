@@ -16,15 +16,15 @@ interface PromiseInterface
     /**
      *
      */
-    const PENDING = 'pending';
+    public const PENDING = 'pending';
     /**
      *
      */
-    const FULFILLED = 'fulfilled';
+    public const FULFILLED = 'fulfilled';
     /**
      *
      */
-    const REJECTED = 'rejected';
+    public const REJECTED = 'rejected';
 
     /**
      * Appends fulfillment and rejection handlers to the promise, and returns
@@ -60,7 +60,7 @@ interface PromiseInterface
      *
      * @return string
      */
-    public function getState();
+    public function getState(): string;
 
     /**
      * Resolve the promise with the given value.

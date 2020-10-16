@@ -1,17 +1,24 @@
 {
     "name": "hlack/promises",
     "description": "Guzzle promises library, hlaCk Version",
-    "keywords": ["promise"],
+    "keywords": [
+        "promise"
+    ],
     "license": "MIT",
     "authors": [
         {
             "name": "Michael Dowling",
             "email": "mtdowling@gmail.com",
             "homepage": "https://github.com/mtdowling"
+        },
+        {
+            "name": "mPhpMaster",
+            "email": "59211285+mPhpMaster@users.noreply.github.com"
         }
     ],
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.4",
+        "mphpmaster/laravel-helpers": "^0.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.4 || ^5.1"
@@ -20,7 +27,9 @@
         "psr-4": {
             "hlaCk\\Promise\\": "src/"
         },
-        "files": ["src/functions_include.php"]
+        "files": [
+            "src/functions_include.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -30,10 +39,5 @@
     "scripts": {
         "test": "vendor/bin/simple-phpunit",
         "test-ci": "vendor/bin/simple-phpunit --coverage-text"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.4-dev"
-        }
     }
 }

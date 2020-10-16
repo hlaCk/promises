@@ -4,6 +4,8 @@ namespace hlaCk\Promise;
 
 final class Each
 {
+    use \mPhpMaster\Support\Traits\TMacroable;
+
     /**
      * Given an iterator that yields promises or values, returns a promise that
      * is fulfilled with a null value when the iterator has been consumed or

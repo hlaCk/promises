@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace hlaCk\Promise;
 
@@ -13,8 +13,8 @@ class RejectionException extends \RuntimeException
     private $reason;
 
     /**
-     * @param mixed  $reason      Rejection reason.
-     * @param string $description Optional description
+     * @param mixed $reason Rejection reason.
+     * @param null|mixed  $description Optional description
      */
     public function __construct($reason, $description = null)
     {
